@@ -1,7 +1,6 @@
 class SQLpool {
 
 	constructor(pool)  {
-		this.con = null
 		this.pool = pool
 	}
 
@@ -17,11 +16,32 @@ class SQLpool {
 		})
 	}
 
-	getDetails() {
-		console.log(`Total Connections: ${this.pool.config.connectionLimit}`)
-		console.log(`Free Connections: ${this.pool._freeConnections.length}`)
-		console.log(`In-use Connections: ${this.pool._allConnections.length}`)
-		console.log(`In-process Connections: ${this.pool._acquiringConnections.length}`)
+	end() {
+		return new Promise ((resolve, reject) => {
+			this.pool.end((err) => {
+				if (err) {
+					return reject(err)
+				} else {
+					resolve()
+				}
+			})
+		})
+	}
+
+	freeConnections() {
+		return this.pool._freeConnections.length
+	}
+
+	totalConnections() {
+		return this.pool.config.connectionLimit
+	}
+
+	usedConnections() {
+		return this.pool._allConnections.length
+	}
+
+	processedConnections() {
+		return this.pool._acquiringConnections.length
 	}
 }
 
@@ -60,8 +80,8 @@ class SQLcon {
 }
 
 
-poolMe = (pool) => {
+poolme = (pool) => {
 	return new SQLpool(pool)
 }
 
-module.exports = poolMe
+module.exports = poolme
