@@ -9,6 +9,7 @@ $ npm install pool-me
 
 ## Introduction
 We assume, if you are looking for something like this, either you have started developing your application already, or you are planning to refactor your code. For both these tasks, its a pretty huge deal to entirely shift over packages, and especially to the one's that provide a small subset of important methods of the original package, i.e [mysql](https://www.npmjs.com/package/mysql#install).
+This is why, this package is aimed at simplicity. Just import the package, create your MySQL Pool using [mysql](https://www.npmjs.com/package/mysql#install) package, and pass it to this package. All the methods are exactly the same, just with the flavour of Async/Await. Even the warnings are same ;)
 
 ## Usage
 This package relies heavily (entirely) on the [mysql package](https://www.npmjs.com/package/mysql#install).
@@ -31,10 +32,10 @@ var newpool = poolme(pool)
 ```
 
 ## Supported Methods
-Currently the package supports some of the important methods required with Pools. The package is in active development stage, and will be updated with support for new methods supported by mysql package.
+Currently the package supports some of the important methods required with Pools. The package is in active development stage, and will be updated with support for new methods supported by [mysql](https://www.npmjs.com/package/mysql#install) package.
 
 ### Pool Methods
-The following are the currently supported methods for the pool
+Currently it supports the following pool methods:
 
 #### getConnection
 This is used to get a connection from the Pool. It is used to share the connection state for subsequent queries.
@@ -43,13 +44,13 @@ This is used to get a connection from the Pool. It is used to share the connecti
  ```
 
 #### end
-After using the pool, you have to end all the connections are to be closed by MySQL Server. This is used to gracefully shut down the server.
+After using the pool, all the connections should be closed at the SQL Server level. This method is used to gracefully shut down the server.
  ``` javascript
  await newpool.end()
  ```
 
 ### Connection Methods
-The following are the currently supported methods for the connection
+Currently it supports the following connection methods:
 
 #### query
 After receiving a connection from the pool, that connection should be used to execute a query. 
